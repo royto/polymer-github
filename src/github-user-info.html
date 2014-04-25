@@ -1,0 +1,55 @@
+<polymer-element name="github-user-info"
+attributes="user">
+
+<template>
+    <h1>{{name}}</h1>
+    <img id="avatar" src={{avatar}} />
+    <p>Repos : {{nbRepos}}</p>
+    <p>Followers : {{followers}}</p>
+    <p>Following : {{following}}</p>
+
+<style>
+github-info {
+  display: block;
+  margin : 5px;
+  background: white;
+  box-shadow: 2px 2px 1px rgba(50, 50, 50, 0.75);
+  overflow : hidden;
+}
+
+h1 {
+  margin : 0px;
+  background : #4679BD;
+  color : white;
+  padding : 0 10px;
+}
+
+p {
+    margin : 2px;
+}
+
+#avatar {
+  float : left;
+  padding : 5px 10px;
+  height : 50px;
+  width : 50px;
+}
+</style>
+</template>
+<script>
+Polymer('github-user-info', {
+    user: '',
+    ready: function() {
+        //TODO Use polymer ajax component
+        $.ajax({url : 'https://api.github.com/users/' + this.user, context : this})
+         .done(function( data ) {
+            this.avatar = data.avatar_url;
+            this.name = data.name;
+            this.nbRepos = data.public_repos;
+            this.followers = data.followers;
+            this.following =  data.following;
+        });
+      }
+});
+</script>
+</polymer-element>
