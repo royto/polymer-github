@@ -1,15 +1,20 @@
-<polymer-element name="github-user-info"
-attributes="user">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+
+<polymer-element name="github-user-info" attributes="user">
 
 <template>
-    <h1>{{name}}</h1>
+    <polymer-ajax id="ajax" auto url="https://api.github.com/users/{{user}}"
+      handleAs="json"></polymer-ajax>
+
+    <h1>@{{user}} : {{name}}</h1>
     <img id="avatar" src={{avatar}} />
     <p>Repos : {{nbRepos}}</p>
     <p>Followers : {{followers}}</p>
     <p>Following : {{following}}</p>
 
 <style>
-github-info {
+github-user-info {
   display: block;
   margin : 5px;
   background: white;
@@ -30,9 +35,10 @@ p {
 
 #avatar {
   float : left;
-  padding : 5px 10px;
+  margin : 7px;
   height : 50px;
   width : 50px;
+  border-radius: 5px;
 }
 </style>
 </template>
@@ -40,15 +46,23 @@ p {
 Polymer('github-user-info', {
     user: '',
     ready: function() {
-        //TODO Use polymer ajax component
-        $.ajax({url : 'https://api.github.com/users/' + this.user, context : this})
-         .done(function( data ) {
-            this.avatar = data.avatar_url;
-            this.name = data.name;
-            this.nbRepos = data.public_repos;
-            this.followers = data.followers;
-            this.following =  data.following;
-        });
+
+        this.handleResult = function(e) {
+          var data = e.detail.response;
+          this.avatar = data.avatar_url;
+          this.name = data.name;
+          this.nbRepos = data.public_repos;
+          this.followers = data.followers;
+          this.following =  data.following;
+          /*document.querySelector('template').model = {
+            response: e.detail.response
+          };//*/
+        };
+
+        var ajax = this.$.ajax;
+        ajax.addEventListener("polymer-response",
+          this.handleResult.bind(this), false
+        );
       }
 });
 </script>

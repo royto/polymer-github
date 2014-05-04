@@ -1,6 +1,7 @@
 {
   "name": "github-user-info",
   "version": "0.0.1",
-  "dependencies": {}
+  "dependencies": {
+    "polymer-ajax": "Polymer/polymer-ajax#~0.2.3"
+  }
 }
-
