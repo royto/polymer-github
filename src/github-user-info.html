@@ -1,10 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
 
 <polymer-element name="github-user-info" attributes="user">
 
 <template>
-    <polymer-ajax id="ajax" auto url="https://api.github.com/users/{{user}}"
+    <core-ajax id="ajax" auto url="https://api.github.com/users/{{user}}"
       handleAs="json"></polymer-ajax>
 
     <h1>@{{user}} : {{name}}</h1>
@@ -60,7 +60,7 @@ Polymer('github-user-info', {
         };
 
         var ajax = this.$.ajax;
-        ajax.addEventListener("polymer-response",
+        ajax.addEventListener("core-response",
           this.handleResult.bind(this), false
         );
       }
