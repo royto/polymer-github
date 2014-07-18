@@ -5,7 +5,7 @@
 
 <template>
     <core-ajax id="ajax" auto url="https://api.github.com/users/{{user}}"
-      handleAs="json"></polymer-ajax>
+      handleAs="json"></core-ajax>
 
     <h1>@{{user}} : {{name}}</h1>
     <img id="avatar" src={{avatar}} />
