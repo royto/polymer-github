@@ -14,12 +14,13 @@
     <p>Following : {{following}}</p>
 
 <style>
-github-user-info {
-  display: block;
+:host {
+  display: inline-block;
   margin : 5px;
   background: white;
   box-shadow: 2px 2px 1px rgba(50, 50, 50, 0.75);
   overflow : hidden;
+  width : 400px;
 }
 
 h1 {
@@ -43,7 +44,7 @@ p {
 </style>
 </template>
 <script>
-Polymer('github-user-info', {
+Polymer( {
     user: '',
     ready: function() {
 
@@ -53,16 +54,11 @@ Polymer('github-user-info', {
           this.name = data.name;
           this.nbRepos = data.public_repos;
           this.followers = data.followers;
-          this.following =  data.following;
-          /*document.querySelector('template').model = {
-            response: e.detail.response
-          };//*/
+          this.following = data.following;
         };
 
         var ajax = this.$.ajax;
-        ajax.addEventListener("core-response",
-          this.handleResult.bind(this), false
-        );
+        ajax.addEventListener("core-response", this.handleResult.bind(this), false);
       }
 });
 </script>
